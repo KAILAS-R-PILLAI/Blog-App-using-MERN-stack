@@ -1,13 +1,21 @@
-# Build React app
-FROM node:18-alpine AS build
+# --- Build React Client ---
+FROM node:18-alpine AS client-build
 WORKDIR /app
-COPY package*.json ./
+COPY client/package*.json ./
 RUN npm install
-COPY . .
+COPY client/ .
 RUN npm run build
 
-# Serve with nginx
-FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# --- Build Express Server ---
+FROM node:18-alpine AS server-build
+WORKDIR /app
+COPY server/package*.json ./
+RUN npm install
+COPY server/ .
+
+# Copy built React files into backend public folder
+COPY --from=client-build /app/build ./public
+
+EXPOSE 5000
+CMD ["npm", "start"]
+
