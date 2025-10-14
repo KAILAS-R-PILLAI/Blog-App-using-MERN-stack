@@ -98,3 +98,5 @@ We would like to thank all contributors and the open-source community for their 
 Feel free to explore the codebase and start creating and sharing your blogs with the world! If you have any questions or need assistance, please don't hesitate to reach out.
 
 Happy blogging!
+
+Thank You!
